@@ -60,6 +60,7 @@ def crawl_nate_weather():
         min_temp       = today.select_one('span.minimum').text.replace('최저', '').strip()
         humidity       = today.select_one('p.humidity em').text.strip()
         wind_speed     = today.select_one('p.wind em').text.strip()
+        precipitation = today.select_one('p.rainfall em').text.strip()
 
         print(f"[1단계] 크롤링 완료: {forecast_date} {forecast_time} {weather_status} {temperature}")
 
@@ -75,6 +76,7 @@ def crawl_nate_weather():
         "max_temperature": max_temp,
         "humidity"       : humidity,
         "wind_speed"     : wind_speed,
+        "precipitation"  : precipitation,
         "source"         : "Nate Weather",
         "forecast_time"  : forecast_time,
         "temperature"    : temperature
@@ -106,7 +108,7 @@ def save_to_mysql(weather_list):
                     item['max_temperature'],
                     item['humidity'],
                     item['wind_speed'],
-                    None,
+                    item['precipitation'],
                     item['source']
                 ])
         conn.commit()
@@ -146,6 +148,7 @@ def upload_to_firestore(rows, conn):
                 "max_temperature": row['max_temperature'],
                 "humidity"       : row['humidity'],
                 "wind_speed"     : row['wind_speed'],
+                "precipitation"  : row['precipitation'],
                 "source"         : row['source'],
                 "forecast_time"  : row['forecast_time'],
                 "uploaded_at"    : datetime.now(timezone(timedelta(hours=9))).isoformat()
