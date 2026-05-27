@@ -44,8 +44,7 @@ def crawl_nate_weather():
         )
         headers = {"User-Agent": "Mozilla/5.0"}
         res = requests.get(url, headers=headers, timeout=10)
-        res.encoding = 'utf-8'
-        soup = BeautifulSoup(res.text, 'html.parser')
+        soup = BeautifulSoup(res.content, 'html.parser')
 
         items = soup.select('div.oneweek_wrap ul li')
         if not items:
