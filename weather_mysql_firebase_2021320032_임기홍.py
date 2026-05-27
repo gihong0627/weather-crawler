@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 import pymysql
 import firebase_admin
 from firebase_admin import credentials, firestore
@@ -33,7 +33,7 @@ def init_firebase():
         firebase_admin.initialize_app(cred)
 
 def crawl_nate_weather():
-    now           = datetime.now()
+    now = datetime.now(timezone(timedelta(hours=9)))
     forecast_date = now.strftime('%Y-%m-%d')
     forecast_time = now.strftime('%H:%M')
     day_of_week   = DAY_NAME_MAP[now.weekday()]
@@ -146,7 +146,7 @@ def upload_to_firestore(rows, conn):
                 "humidity"       : row['humidity'],
                 "wind_speed"     : row['wind_speed'],
                 "source"         : row['source'],
-                "uploaded_at"    : datetime.now().isoformat()
+                "uploaded_at": datetime.now(timezone(timedelta(hours=9))).isoformat()
             })
 
             with conn.cursor() as cursor:
