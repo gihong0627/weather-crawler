@@ -24,4 +24,4 @@ jobs:
           MYSQL_PASSWORD:       ${{ secrets.MYSQL_PASSWORD }}
           MYSQL_DB:             ${{ secrets.MYSQL_DB }}
           FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
-        run: python weather_mysql_firebase_2021320032_기홍.py
+        run: python weather_mysql_firebase_2021320032_임기홍.py
