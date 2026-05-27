@@ -153,8 +153,6 @@ def get_unsynced():
         with conn.cursor() as cursor:
             cursor.callproc('get_unsynced_weather')
             rows = cursor.fetchall()
-            for result in cursor.stored_results():
-                rows = result.fetchall()
         print(f"\n[4단계] 미업로드 데이터 조회: {len(rows)}건")
         return rows, conn
     except:
