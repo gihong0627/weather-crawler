@@ -16,7 +16,7 @@ def get_mysql_conn():
         port        = int(os.environ['MYSQL_PORT']),
         user        = os.environ['MYSQL_USER'],
         password    = os.environ['MYSQL_PASSWORD'],
-        db          = os.environ['MYSQL_DB'],
+        database    = os.environ['MYSQL_DB'],
         charset     = 'utf8mb4',
         cursorclass = pymysql.cursors.DictCursor
     )
@@ -152,7 +152,7 @@ def get_unsynced():
     try:
         with conn.cursor() as cursor:
             cursor.callproc('get_unsynced_weather')
-            rows = []
+            rows = cursor.fetchall()
             for result in cursor.stored_results():
                 rows = result.fetchall()
         print(f"\n[4단계] 미업로드 데이터 조회: {len(rows)}건")
