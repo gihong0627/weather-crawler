@@ -1,0 +1,27 @@
+name: 테스트 실행
+
+on:
+  workflow_dispatch:    # 수동 실행만
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: 라이브러리 설치
+        run: pip install requests beautifulsoup4 pymysql firebase-admin
+
+      - name: 테스트 실행
+        env:
+          MYSQL_HOST:           ${{ secrets.MYSQL_HOST }}
+          MYSQL_PORT:           ${{ secrets.MYSQL_PORT }}
+          MYSQL_USER:           ${{ secrets.MYSQL_USER }}
+          MYSQL_PASSWORD:       ${{ secrets.MYSQL_PASSWORD }}
+          MYSQL_DB:             ${{ secrets.MYSQL_DB }}
+          FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
+        run: python weather_mysql_firebase_2021320032_기홍.py
