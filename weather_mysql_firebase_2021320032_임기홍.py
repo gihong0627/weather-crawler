@@ -141,12 +141,14 @@ def upload_to_firestore(rows, conn):
                 "forecast_date"  : str(row['forecast_date']),
                 "day_of_week"    : row['day_of_week'],
                 "weather_status" : row['weather_status'],
+                "temperature"    : row['temperature'],
                 "min_temperature": row['min_temperature'],
                 "max_temperature": row['max_temperature'],
                 "humidity"       : row['humidity'],
                 "wind_speed"     : row['wind_speed'],
                 "source"         : row['source'],
-                "uploaded_at": datetime.now(timezone(timedelta(hours=9))).isoformat()
+                "forecast_time"  : row['forecast_time'],
+                "uploaded_at"    : datetime.now(timezone(timedelta(hours=9))).isoformat()
             })
 
             with conn.cursor() as cursor:
